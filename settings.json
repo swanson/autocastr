@@ -1,0 +1,15 @@
+{
+    "max_backlog": 5, 
+    "folder_size": 600,
+    "feeds":
+        [
+            {
+                "url": "http://feeds.feedburner.com/changelogshow",
+                "last_checked": 0
+            },
+            {
+                "url": "http://feeds.feedburner.com/HanselminutesCompleteMP3",
+                "last_checked": 0
+            }
+        ]
+}

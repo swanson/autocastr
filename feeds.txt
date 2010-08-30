@@ -1,0 +1,7 @@
+http://feeds.feedburner.com/changelogshow
+http://feeds.feedburner.com/HanselminutesCompleteMP3
+http://advocacy.python.org/podcasts/littlebit.rss
+http://blog.stackoverflow.com/index.php?feed=podcast
+http://feeds2.feedburner.com/twist-audio
+http://feeds.feedburner.com/se-radio?q=rss
+http://leoville.tv/podcasts/floss.xml
