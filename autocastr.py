@@ -23,6 +23,8 @@ for feed in feeds:
     if feed not in tracked_urls:
         settings['feeds'].append({'url':feed, 'last_checked':0})
 
+#todo: remove feeds that arent in feeds.txt from settings.json
+
 def get_latest_folder():
     cds = glob.glob('podcasts/cd-*')
     latest = max([int(c.replace('podcasts/cd-','')) for c in cds])
@@ -32,14 +34,25 @@ def clean_root():
     shutil.rmtree('podcasts', True)
     os.mkdir('podcasts')
 
+def clean_filename(value):
+    import unicodedata
+    value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore')
+    value = unicode(re.sub('[^\w\s-]', '', value).strip().lower())
+    return re.sub('[-\s]+', '-', value)
+
 def add_file(data, name):
+    #todo: include size of file that will be added!
+    name = clean_filename(name)
     latest_dir = 'podcasts/cd-%s' % get_latest_folder()
-    size = os.path.getsize(latest_dir)
+    size = sum([os.path.getsize(latest_dir + '/' + f) for f in os.listdir(latest_dir)])
     if size > DIR_LIMIT:
-        latest_dir = 'podcast/cd-%s' % (get_latest_folder() + 1)
+        latest_dir = 'podcasts/cd-%s' % (get_latest_folder() + 1)
         os.mkdir(latest_dir)
     with open(os.path.join(latest_dir, name), 'wb') as fp:
         fp.write(data) 
+
+if not os.path.exists('podcasts'):
+    os.mkdir('podcasts')
 
 if not os.path.exists('podcasts/cd-0'):
     os.mkdir('podcasts/cd-0')
@@ -61,7 +74,6 @@ for feed in settings['feeds']:
                 file = urllib2.urlopen(episode['enclosures'][0].href)
                 add_file(file.read(), '%s - %s' %(d['feed']['title'], episode['title']))
                 ep_count += 1
-    feed['last_checked'] = time.mktime(d['entries'][0]['updated_parsed'])
-                
-with open('settings.json', 'w') as fp:
-    json.dump(settings, fp, indent = 4)
+    feed['last_checked'] = time.mktime(d['entries'][0]['updated_parsed'])               
+    with open('settings.json', 'w') as fp:
+        json.dump(settings, fp, indent = 4)
