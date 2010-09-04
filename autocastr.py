@@ -29,7 +29,7 @@ for feed in feeds:
 def get_latest_folder():
     glob_path = FOLDER_FORMAT % '*'
     cds = glob.glob(glob_path)
-    latest = max([int(c.replace(FOLDER_FORMAT % '','')) for c in cds])   #todo fix that, its gross
+    latest = max([int(re.sub('[^\d]', '', c)) for c in cds])
     return latest
 
 def clean_root():
@@ -45,7 +45,7 @@ def clean_filename(value):
 def add_file(data, name, filesize):
     name = clean_filename(name)
     latest_dir = FOLDER_FORMAT % get_latest_folder()
-    size = sum([os.path.getsize(latest_dir + '/' + f) for f in os.listdir(latest_dir)])
+    size = sum([os.path.getsize(os.path.join(latest_dir, f)) for f in os.listdir(latest_dir)])
     if size + filesize > DIR_LIMIT:
         latest_dir = FOLDER_FORMAT % (get_latest_folder() + 1)
         os.mkdir(latest_dir)
