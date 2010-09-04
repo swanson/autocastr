@@ -24,7 +24,9 @@ for feed in feeds:
     if feed not in tracked_urls:
         settings['feeds'].append({'url':feed, 'last_checked':0})
 
-#todo: remove feeds that arent in feeds.txt from settings.json
+for i, existing in enumerate(settings['feeds'][:]):
+    if existing['url'] not in feeds:
+        settings['feeds'].pop(i)
 
 def get_latest_folder():
     glob_path = FOLDER_FORMAT % '*'
