@@ -14,7 +14,7 @@ Get the source:
 
 Add the RSS feeds for the podcasts you want (only supports MP3s) to `feeds.txt`
 
-Run the script to check for download new podcasts (make a cron job if you are a cool):
+Run the script to download new podcasts (make a cron job if you are a cool):
 
     cd autocastr
     python autocastr.py
