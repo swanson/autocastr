@@ -20,7 +20,7 @@ Run the script to download new podcasts (make a cron job if you are a cool):
     python autocastr.py
 
 *where?*  
-After you run the script, your podcasts are the `autocastr/podcasts/` directory, split into folders that you can easily burn to a CD with your favorite program.
+After you run the script, your podcasts are in the `autocastr/podcasts/` directory, split into numbered folders that you can easily burn to a CD with your favorite program.
 
 *how can i..?*  
 
