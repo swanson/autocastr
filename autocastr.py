@@ -1,15 +1,17 @@
+
 try:
     import feedparser
 except:
     raise Exception("You need feedparser! Use pip or easy_install to get it")
-import os, shutil, sys, re, urllib2, json, time, glob
+import os, shutil, re, urllib2, json, time, glob
 
 with open('settings.json', 'r') as fp:
     settings = json.loads(fp.read())
 
 DIR_LIMIT = settings['folder_size'] * 1048576
 MAX_BACKLOG = settings['max_backlog']
-audio_mime = re.compile('audio/.*', re.I)
+FOLDER_FORMAT = os.path.join('podcasts','cd-%s')
+AUDIO_MIME = re.compile('audio/.*', re.I)
 
 tracked_feeds = settings['feeds']
 tracked_urls = [f['url'] for f in tracked_feeds]
@@ -24,8 +26,9 @@ for feed in feeds:
         settings['feeds'].append({'url':feed, 'last_checked':0})
 
 def get_latest_folder():
-    cds = glob.glob('podcasts/cd-*')
-    latest = max([int(c.replace('podcasts/cd-','')) for c in cds])
+    glob_path = FOLDER_FORMAT % '*'
+    cds = glob.glob(glob_path)
+    latest = max([int(c.replace(FOLDER_FORMAT % '','')) for c in cds])   #todo fix that, its gross
     return latest
 
 def clean_root():
@@ -33,16 +36,17 @@ def clean_root():
     os.mkdir('podcasts')
 
 def add_file(data, name):
-    latest_dir = 'podcasts/cd-%s' % get_latest_folder()
+    latest_dir = FOLDER_FORMAT % get_latest_folder()
     size = os.path.getsize(latest_dir)
     if size > DIR_LIMIT:
-        latest_dir = 'podcast/cd-%s' % (get_latest_folder() + 1)
+        latest_dir = FOLDER_FORMAT % (get_latest_folder() + 1)
         os.mkdir(latest_dir)
     with open(os.path.join(latest_dir, name), 'wb') as fp:
         fp.write(data) 
 
-if not os.path.exists('podcasts/cd-0'):
-    os.mkdir('podcasts/cd-0')
+default_path = FOLDER_FORMAT % '0'
+if not os.path.exists(default_path):
+    os.mkdir(default_path)
 
 for feed in settings['feeds']:
     d = feedparser.parse(feed['url'])
@@ -55,7 +59,7 @@ for feed in settings['feeds']:
             break
         if 'enclosures' in episode:    
             type = episode['enclosures'][0].type
-            if audio_mime.search(type) is not None:
+            if AUDIO_MIME.search(type) is not None:
                 print 'Downloading %s - %s\n' % (episode['title'], \
                         episode['enclosures'][0].href)
                 file = urllib2.urlopen(episode['enclosures'][0].href)

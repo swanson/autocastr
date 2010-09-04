@@ -1,6 +1,3 @@
--add config file for RSS feeds
--timestamp last checked times/dont download stuff we already should have
--figure out directory naming structure
 -id3 tagging
 -explore multithreading downloads
 -simple gui (dont go crazy with pyqt...)
