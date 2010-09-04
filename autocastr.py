@@ -3,7 +3,7 @@ try:
     import feedparser
 except:
     raise Exception("You need feedparser! Use pip or easy_install to get it")
-import os, shutil, re, urllib2, json, time, glob
+import os, shutil, re, urllib2, json, time, glob, sys
 
 with open('settings.json', 'r') as fp:
     settings = json.loads(fp.read())
@@ -51,7 +51,7 @@ def add_file(data, name):
     if size > DIR_LIMIT:
         latest_dir = FOLDER_FORMAT % (get_latest_folder() + 1)
         os.mkdir(latest_dir)
-    with open(os.path.join(latest_dir, name), 'wb') as fp:
+    with open(os.path.join(latest_dir, name) + '.mp3', 'wb') as fp:
         fp.write(data) 
 
 default_path = FOLDER_FORMAT % '0'
@@ -62,11 +62,12 @@ for feed in settings['feeds']:
     d = feedparser.parse(feed['url'])
     print 'Checking for new episodes of', d['feed']['title']
     ep_count = 0
-    for episode in d['entries']:
+    sorted_entries = sorted(d['entries'], cmp = lambda x,y: cmp(y['updated_parsed'], x['updated_parsed']))
+    for episode in sorted_entries:
         if ep_count >= MAX_BACKLOG:
             break
         if time.mktime(episode['updated_parsed']) <= feed['last_checked']:
-            break
+            continue
         if 'enclosures' in episode:    
             type = episode['enclosures'][0].type
             if AUDIO_MIME.search(type) is not None:
@@ -75,6 +76,9 @@ for feed in settings['feeds']:
                 file = urllib2.urlopen(episode['enclosures'][0].href)
                 add_file(file.read(), '%s - %s' %(d['feed']['title'], episode['title']))
                 ep_count += 1
-    feed['last_checked'] = time.mktime(d['entries'][0]['updated_parsed'])               
+    feed['last_checked'] = time.mktime(max([e['updated_parsed'] for e in d['entries']]))
     with open('settings.json', 'w') as fp:
         json.dump(settings, fp, indent = 4)
+
+print 'done'
+sys.exit()
