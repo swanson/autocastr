@@ -1,4 +1,3 @@
-
 try:
     import feedparser
 except:
@@ -43,12 +42,11 @@ def clean_filename(value):
     value = unicode(re.sub('[^\w\s-]', '', value).strip().lower())
     return re.sub('[-\s]+', '-', value)
 
-def add_file(data, name):
-    #todo: include size of file that will be added!
+def add_file(data, name, filesize):
     name = clean_filename(name)
     latest_dir = FOLDER_FORMAT % get_latest_folder()
     size = sum([os.path.getsize(latest_dir + '/' + f) for f in os.listdir(latest_dir)])
-    if size > DIR_LIMIT:
+    if size + filesize > DIR_LIMIT:
         latest_dir = FOLDER_FORMAT % (get_latest_folder() + 1)
         os.mkdir(latest_dir)
     with open(os.path.join(latest_dir, name) + '.mp3', 'wb') as fp:
@@ -74,7 +72,7 @@ for feed in settings['feeds']:
                 print 'Downloading %s - %s\n' % (episode['title'], \
                         episode['enclosures'][0].href)
                 file = urllib2.urlopen(episode['enclosures'][0].href)
-                add_file(file.read(), '%s - %s' %(d['feed']['title'], episode['title']))
+                add_file(file.read(), '%s - %s' %(d['feed']['title'], episode['title']), int(episode['enclosures'][0].length))
                 ep_count += 1
     feed['last_checked'] = time.mktime(max([e['updated_parsed'] for e in d['entries']]))
     with open('settings.json', 'w') as fp:
