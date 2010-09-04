@@ -1,13 +1,13 @@
 autocastr
 ========
-*what?*
+*what?*  
 Download your podcasts and separate them into CD-R sized folders to allow for quick burning
 
-*why?*
+*why?*  
 Because I'm cheap -- now you can listen to podcasts in your car without aftermarket sound systems or crappy
 mp3 player docks, just use your CD player!
 
-*how?*
+*how?*  
 Get the source:
 
     git clone git://github.com/swanson/autocastr.git
@@ -19,10 +19,10 @@ Run the script to check for download new podcasts (make a cron job if you are a 
     cd autocastr
     python autocastr.py
 
-*where?*
+*where?*  
 After you run the script, your podcasts are the `autocastr/podcasts/` directory, split into folders that you can easily burn to a CD with your favorite program.
 
-*how can i..?*
+*how can i..?*  
 
   - add feeds?  add them to `feeds.txt`
   - remove feeds? remove them from `feeds.txt`
