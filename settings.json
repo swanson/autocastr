@@ -3,15 +3,15 @@
     "feeds": [
         {
             "url": "http://feeds.feedburner.com/changelogshow", 
-            "last_checked": 1282251600.0
+            "last_checked": 1283288400.0
         }, 
         {
             "url": "http://feeds.feedburner.com/HanselminutesCompleteMP3", 
-            "last_checked": 1282263687.0
+            "last_checked": 1282860569.0
         }, 
         {
             "url": "http://advocacy.python.org/podcasts/littlebit.rss", 
-            "last_checked": 1258779600.0
+            "last_checked": 1280120400.0
         }, 
         {
             "url": "http://blog.stackoverflow.com/index.php?feed=podcast", 
@@ -22,8 +22,8 @@
             "last_checked": 1282178249.0
         }, 
         {
-            "url": "http://leoville.tv/podcasts/floss.xml", 
-            "last_checked": 1283035781.0
+            "url": "http://feeds.feedburner.com/StartupsForTheRestOfUs", 
+            "last_checked": 1283263256.0
         }
     ], 
     "folder_size": 600

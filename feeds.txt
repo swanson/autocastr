@@ -3,6 +3,4 @@ http://feeds.feedburner.com/HanselminutesCompleteMP3
 http://advocacy.python.org/podcasts/littlebit.rss
 http://blog.stackoverflow.com/index.php?feed=podcast
 http://feeds.feedburner.com/se-radio?q=rss
-http://leoville.tv/podcasts/floss.xml
 http://feeds.feedburner.com/StartupsForTheRestOfUs
-http://feeds.feedburner.com/twist-audio
