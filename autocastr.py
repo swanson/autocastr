@@ -1,3 +1,11 @@
+# Download your podcasts and separate them into CD-R sized folders to allow for quick burning
+
+# *why?* 
+# Because I'm cheap -- now you can listen to podcasts in your car without aftermarket 
+# sound systems or crappy mp3 player docks, just use your CD player!
+# ---
+
+
 # External dependancy, too lazy to parse
 # RSS feeds myself
 try:
@@ -119,3 +127,4 @@ for feed in settings['feeds']:
 
 print 'Done.'
 sys.exit()
+
