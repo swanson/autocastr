@@ -1,6 +1,0 @@
-http://feeds.feedburner.com/changelogshow
-http://feeds.feedburner.com/HanselminutesCompleteMP3
-http://advocacy.python.org/podcasts/littlebit.rss
-http://blog.stackoverflow.com/index.php?feed=podcast
-http://feeds.feedburner.com/se-radio?q=rss
-http://feeds.feedburner.com/StartupsForTheRestOfUs
